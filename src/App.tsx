@@ -90,15 +90,18 @@ function App() {
     }));
   };
 
+  const headname = "G";
+  const headnamereplace = `\"g\"`;
+
   return (
     <div className="Appb">
-      <h1 className="App">3変数Goal関数計算機</h1>
+      <h1 className="App">3変数伊関数計算機</h1>
       <p className="Appa">
-        入力はG(a,b,c), G_&#123;a&#125;(b,c)の形式で行ってください。<br />
-        a=0の時はG(b,c), G_&#123;b&#125;(c)、a=0かつb=0の時はG(c)としても大丈夫です。<br />
+        入力は{headname}(a,b,c), {headname}_&#123;a&#125;(b,c)の形式で行ってください。<br />
+        a=0の時は{headname}(b,c), {headname}_&#123;b&#125;(c)、a=0かつb=0の時は{headname}(c)としても大丈夫です。<br />
         _, &#123;, &#125;は省略可能です。<br />
-        略記として、1 := G(0,0,0), n := 1 + 1 + ...(n個の1)... + 1, ω := G(0,0,1), Ω := G(0,1,0), I := G(1,0,0)が使用可能。<br />
-        また、Gはgで、ωはwで、ΩはWで、Iはiで代用可能。
+        略記として、1 := {headname}(0,0,0), n := 1 + 1 + ...(n個の1)... + 1, ω := {headname}(0,0,1), Ω := {headname}(0,1,0), I := {headname}(1,0,0)が使用可能。<br />
+        また、{headname}は{headnamereplace}で、ωはwで、ΩはWで、Iはiで代用可能。
       </p>
       <div className="block">
         A:
@@ -136,19 +139,19 @@ function App() {
         <ul>
           <li><label className="checkbox">
             <input type="checkbox" checked={options.checkOnOffo} onChange={() => handleCheckboxChange('checkOnOffo')} />
-            G(0,0,1)をωで出力
+            {headname}(0,0,1)をωで出力
           </label></li>
           <li><label className="checkbox">
             <input type="checkbox" checked={options.checkOnOffO} onChange={() => handleCheckboxChange('checkOnOffO')} />
-            G(0,1,0)をΩで出力
+            {headname}(0,1,0)をΩで出力
           </label></li>
           <li><label className="checkbox">
             <input type="checkbox" checked={options.checkOnOffI} onChange={() => handleCheckboxChange('checkOnOffI')} />
-            G(1,0,0)をIで出力
+            {headname}(1,0,0)をIで出力
           </label></li>
           <li><label className="checkbox">
             <input type="checkbox" checked={options.checkOnOffA} onChange={() => handleCheckboxChange('checkOnOffA')} />
-            G(a,b,c)をG_a(b,c)で表示
+            {headname}(a,b,c)を{headname}_a(b,c)で表示
           </label></li>
           {options.checkOnOffA ? (
             <li><ul><li><label className="checkbox">
@@ -160,13 +163,13 @@ function App() {
           )}
           <li><label className="checkbox">
             <input type="checkbox" checked={options.checkOnOffC} onChange={() => handleCheckboxChange('checkOnOffC')} />
-            G(0,b,c)をG(b,c)で表示
+            {headname}(0,b,c)を{headname}(b,c)で表示
           </label></li>
           {options.checkOnOffC ? (
             <li><ul>
               <li><label className="checkbox">
                 <input type="checkbox" checked={options.checkOnOffD} onChange={() => handleCheckboxChange('checkOnOffD')} />
-                G(b,c)をG_b(c)で表示
+                {headname}(b,c)を{headname}_b(c)で表示
               </label></li>
               {options.checkOnOffD ? (
                 <li><ul><li><label className="checkbox">
@@ -178,7 +181,7 @@ function App() {
               )}
               <li><label className="checkbox">
                 <input type="checkbox" checked={options.checkOnOffE} onChange={() => handleCheckboxChange('checkOnOffE')} />
-                G(0,c)をG(c)で表示
+                {headname}(0,c)を{headname}(c)で表示
               </label></li>
             </ul></li>
           ) : (
