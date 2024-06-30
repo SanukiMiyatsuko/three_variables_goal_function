@@ -163,6 +163,15 @@ export function dom(s: T): ZT | PT {
 }
 
 // find(s, t)
+function find_right_most_node(s: AT | PT): PT {
+    if (s.type === "plus") {
+        return s.add[s.add.length - 1];
+    } else {
+        return s;
+    }
+}
+
+// find(s, t)
 function find(n: number, s: T, t: T): T {
     if (s.type === "zero") {
         return Z;
@@ -204,9 +213,9 @@ export function fund(s: T, t: T): T {
         const b = s.arr[1];
         const c = s.arr[2];
         const domc = dom(c);
-        if (domc.type === "zero") {
+        if (domc.type === "zero" || c.type === "zero") {
             const domb = dom(b);
-            if (domb.type === "zero") {
+            if (domb.type === "zero" || b.type === "zero") {
                 const doma = dom(a);
                 if (doma.type === "zero" || equal(doma, ONE)) {
                     return t;
@@ -231,25 +240,14 @@ export function fund(s: T, t: T): T {
                             return psi([a, fund(b, t), c]);
                         } else {
                             const g = dome.arr[0];
-                            if (b.type === "plus") {
-                                const i = b.add[b.add.length - 1].arr[0];
-                                if (less_than(t, OMEGA) && equal(dom(t), ONE)) {
-                                    const p = fund(s, fund(t, Z));
-                                    if (p.type !== "psi") throw Error("pがPTの元ではない");
-                                    const Gamma = p.arr[1];
-                                    return psi([a, fund(b, replace(0, find(0, Gamma, i), fund(g, Z))), c]);
-                                } else {
-                                    return psi([a, fund(b, Z), c]);
-                                }
+                            const i = find_right_most_node(b).arr[0];
+                            if (less_than(t, OMEGA) && equal(dom(t), ONE)) {
+                                const p = fund(s, fund(t, Z));
+                                if (p.type !== "psi") throw Error("pがPTの元ではない");
+                                const Gamma = p.arr[1];
+                                return psi([a, fund(b, replace(0, find(0, Gamma, i), fund(g, Z))), c]);
                             } else {
-                                if (less_than(t, OMEGA) && equal(dom(t), ONE)) {
-                                    const p = fund(s, fund(t, Z));
-                                    if (p.type !== "psi") throw Error("pがPTの元ではない");
-                                    const Gamma = p.arr[1];
-                                    return psi([a, fund(b, replace(0, Gamma, fund(g, Z))), c]);
-                                } else {
-                                    return psi([a, fund(b, Z), c]);
-                                }
+                                return psi([a, fund(b, Z), c]);
                             }
                         }
                     }
@@ -283,13 +281,14 @@ export function fund(s: T, t: T): T {
                     return psi([a, b, fund(c, t)]);
                 } else {
                     const g = dome.arr[0];
+                    const i = find_right_most_node(c).arr[0];
                     if (less_than(t, OMEGA) && equal(dom(t), ONE)) {
                         const p = fund(s, fund(t, Z));
-                        if (p.type !== "psi") throw Error("pがPTの元ではないです");
+                        if (p.type !== "psi") throw Error("pがPTの元ではない");
                         const Gamma = p.arr[2];
-                        return psi([a, b, fund(c, psi([fund(g, Z), Gamma, Z]))]);
+                        return psi([a, b, fund(c, replace(0, find(0, Gamma, i), fund(g, Z)))]);
                     } else {
-                        return psi([a, b, fund(c, psi([fund(g, Z), Z, Z]))]);
+                        return psi([a, b, fund(c, Z)]);
                     }
                 }
             } else {
@@ -297,25 +296,14 @@ export function fund(s: T, t: T): T {
                     return psi([a, b, fund(c, t)]);
                 } else {
                     const h = domf.arr[1];
-                    if (b.type === "plus") {
-                        const k = b.add[b.add.length - 1].arr[1];
-                        if (less_than(t, OMEGA) && equal(dom(t), ONE)) {
-                            const p = fund(s, fund(t, Z));
-                            if (p.type !== "psi") throw Error("pがPTの元ではないです");
-                            const Gamma = p.arr[2];
-                            return psi([a, b, fund(c, replace(1, find(1, Gamma, k), fund(h, Z)))]);
-                        } else {
-                            return psi([a, b, fund(c, Z)]);
-                        }
+                    const k = find_right_most_node(c).arr[1];
+                    if (less_than(t, OMEGA) && equal(dom(t), ONE)) {
+                        const p = fund(s, fund(t, Z));
+                        if (p.type !== "psi") throw Error("pがPTの元ではないです");
+                        const Gamma = p.arr[2];
+                        return psi([a, b, fund(c, replace(1, find(1, Gamma, k), fund(h, Z)))]);
                     } else {
-                        if (less_than(t, OMEGA) && equal(dom(t), ONE)) {
-                            const p = fund(s, fund(t, Z));
-                            if (p.type !== "psi") throw Error("pがPTの元ではないです");
-                            const Gamma = p.arr[2];
-                            return psi([a, b, fund(c, replace(1, Gamma, fund(h, Z)))]);
-                        } else {
-                            return psi([a, b, fund(c, Z)]);
-                        }
+                        return psi([a, b, fund(c, Z)]);
                     }
                 }
             }
