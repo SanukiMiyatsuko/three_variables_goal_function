@@ -95,7 +95,7 @@ function App() {
 
   return (
     <div className="Appb">
-      <h1 className="App">3変数伊関数計算機</h1>
+      <h1 className="App">3変数Goal関数計算機</h1>
       <p className="Appa">
         入力は{headname}(a,b,c), {headname}_&#123;a&#125;(b,c)の形式で行ってください。<br />
         a=0の時は{headname}(b,c), {headname}_&#123;b&#125;(c)、a=0かつb=0の時は{headname}(c)としても大丈夫です。<br />
