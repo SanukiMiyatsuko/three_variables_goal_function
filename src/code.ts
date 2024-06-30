@@ -281,14 +281,13 @@ export function fund(s: T, t: T): T {
                     return psi([a, b, fund(c, t)]);
                 } else {
                     const g = dome.arr[0];
-                    const i = find_right_most_node(c).arr[0];
                     if (less_than(t, OMEGA) && equal(dom(t), ONE)) {
                         const p = fund(s, fund(t, Z));
-                        if (p.type !== "psi") throw Error("pがPTの元ではない");
+                        if (p.type !== "psi") throw Error("pがPTの元ではないです");
                         const Gamma = p.arr[2];
-                        return psi([a, b, fund(c, replace(0, find(0, Gamma, i), fund(g, Z)))]);
+                        return psi([a, b, fund(c, psi([fund(g, Z), Gamma, Z]))]);
                     } else {
-                        return psi([a, b, fund(c, Z)]);
+                        return psi([a, b, fund(c, psi([fund(g, Z), Z, Z]))]);
                     }
                 }
             } else {
